@@ -6,7 +6,7 @@ send a message over Kafka or Amazon Kinesis and get a resonse back in another
 message. Or you do an HTTP request and include a callback URL where the service
 can send back information at a later time.
 
-One hard requirement here is that there must be some way to map the response
+One hard requirement is there must be some way to map the response
 message with the request message. Both the request and the response message must
 have some unique information that can be used to build a string key to match up
 the two.
