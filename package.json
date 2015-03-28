@@ -1,0 +1,26 @@
+{
+  "name": "hipq",
+  "version": "0.0.1",
+  "description": "A durable persistent job queue, scheduling, throttling service for Node.js",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "lab -vl -m 1500"
+  },
+  "keywords": [
+    "job",
+    "queue",
+    "service",
+    "node",
+    "scheduling",
+    "priority",
+    "throttling",
+    "retry",
+    "timeout"
+  ],
+  "author": "John Stein <john@johnandkerri.com>",
+  "license": "ISC"
+}
