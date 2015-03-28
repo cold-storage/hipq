@@ -71,7 +71,7 @@ jobs in your queue, any jobs with priority two or lower will never run.
 ### Throttling
 
 Each queue can have a concurrency limit. The default is unlimited. If the
-concurrency limit is 10, we guarantee no more than 10 jobs will run at a time.
+concurrency limit is 10, no more than 10 jobs will run at a time.
 
 Each job type can have concurrency or throttle factor that attempts to guage
 the amount of effort requred by some external system to run the job. So if your
