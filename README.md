@@ -43,21 +43,41 @@ on their priority and the queue's throttle settings.
 
 ### Priority
 
-All jobs have a numeric priority. The default is 100. Jobs are taken from the
-queue by priority then by scheduled time. Imagine a table sorted first by
-priority ascending, then by scheduled time ascending.
+Priority only really matters if throttling is being used. And if you are not
+careful in using priority, some lower priority jobs may never run especially if
+you have the queue configured to sort by priority first.
+
+All jobs have a numeric priority. The default is 100. The lower the number, the
+higher the priority. Jobs are taken from the queue by scheduled time then by
+priority. Imagine a table sorted first by scheduled time then by priority
+ascending.
 
 scheduled time      | priority
 :------------------ | -------:
+10:32               |      700
 10:33               |       50
 10:33               |      100
-10:40               |       50
-10:40               |      100
+10:40               |        1
+10:40               |        7
+
+Alternatively you can configure a queue to sort first by priority then by
+scheduled time. This is a bit risky because higher priority jobs can starve out
+the lower priority ones and they may never run.
+
+For example, lets say you have a throttle limit of ten jobs. That means only ten
+jobs will ever run at a given time. If you always have ten or more priority one
+jobs in your queue, any jobs with priority two or lower will never run.
 
 ### Throttling
 
 Each queue can have a concurrency limit. The default is unlimited. If the
 concurrency limit is 10, we guarantee no more than 10 jobs will run at a time.
+
+Each job type can have concurrency or throttle factor that attempts to guage
+the amount of effort requred by some external system to run the job. So if your
+concurrency limit for a given queue is 10 you can run 10 jobs at at time. But
+if your jobs have a concurrency factor of 2 that means they are equal to
+two normal jobs and you can only run 5 of them at a time.
 
 ### Retry
 
