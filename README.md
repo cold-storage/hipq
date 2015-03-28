@@ -30,7 +30,7 @@ occasional latency of half a minute or so.
 
 ### Durability
 
-Once a job is successfully queued, we guarantee it will not be lost. It will be
+Once a job is successfully queued, we guarantee it will not be lost. It will
 run at the proper time (or as soon after that as possible) even if your
 application suffers a hard crash.
 
@@ -47,12 +47,12 @@ All jobs have a numeric priority. The default is 100. Jobs are taken from the
 queue by priority then by scheduled time. Imagine a table sorted first by
 priority ascending, then by scheduled time ascending.
 
-priority | scheduled time
--------: | :------------------
-      50 | 10:33
-      50 | 10:34
-     100 | 10:20
-     100 | 10:30
+scheduled time      | priority
+:------------------ | -------:
+10:33               |       50
+10:33               |      100
+10:40               |       50
+10:40               |      100
 
 ### Throttling
 
