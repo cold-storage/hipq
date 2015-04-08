@@ -114,3 +114,7 @@ Durability is a high priority for us and super low latency is not. Not sure that
 scalability is a priority, but probably won't hurt either. If we implement such that all state
 is in the database we can probably accomplish both durability and scalability. With scalability,
 we also open up the option of having implementations in languages other than Node.js.
+
+Actually not sure we can or want to horrizontally scale a single queue. Otherwise you end up 
+with something like Kafka or Knesis. And in that case we would just want to add priority,
+retry, throttling, etc to them.
