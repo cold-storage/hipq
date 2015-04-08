@@ -118,3 +118,8 @@ we also open up the option of having implementations in languages other than Nod
 Actually not sure we can or want to horrizontally scale a single queue. Otherwise you end up 
 with something like Kafka or Knesis. And in that case we would just want to add priority,
 retry, throttling, etc to them.
+
+### PostgreSQL Pub-Sub
+
+Looks interesting, but probably want to keep to SQL standard so we can use any SQL compliant db.
+http://blog.andyet.com/2015/04/06/postgres-pubsub-with-json?utm_source=postgresweekly&utm_medium=email
