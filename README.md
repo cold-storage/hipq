@@ -101,3 +101,11 @@ also specified a scheduled time, then we will use the scheduled time assuming it
 is  within the window). If we pull the job off the queue and its window has
 already closed, we will re-queue it to run at the next available time.
 
+## Implementation Notes
+
+### Durability
+
+Durability is a high priority for us and super low latency is not. Not sure that horrizontal 
+scalability is a priority, but probably won't hurt either. If we implement such that all state
+is in the database we can probably accomplish both durability and scalability. With scalability,
+we also open up the option of having implementations in languages other than Node.js.
