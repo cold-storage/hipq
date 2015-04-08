@@ -1,6 +1,6 @@
 # hipq
 
-A job queue service for Node.js specifically for jobs interact with external
+A job queue service for Node.js specifically for jobs that interact with external
 services by sending and receiving messages in a decoupled fashion. Maybe you
 send a message over Kafka or Amazon Kinesis and get a resonse back in another
 message. Or you do an HTTP request and include a callback URL where the service
@@ -10,6 +10,11 @@ One hard requirement is there must be some way to map the response
 message with the request message. Both the request and the response message must
 have some unique information that can be used to build a string key to match up
 the two.
+
+## Status
+
+We are in requirements definition mode. If we find a mature product that meets our needs, this
+project will be abandoned. 
 
 ## Features
 
