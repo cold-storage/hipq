@@ -1,12 +1,24 @@
 # Transient State
 
+## hipq
+
+* name
+* table_naming_strategy
+* db_config
+
+```name``` unique (per database) string (lower case alpha with underscores) used to identify the hipq instance.
+
+```table_naming_strategy``` code that determines how tables will be named for each queue in this hipq instance. Default strategy is hipq.name_queue.name. 
+
+```db_config``` JSON of database connection information.
+
 ## Queue
 
 * name
 * job_types
 * throttle_limit
 
-```name``` unique string used to identify the queue. 
+```name``` unique (per hipq) string (lower case alpha with underscores) used to identify the queue. 
 
 ```job_types``` list of all registered job types.
 
