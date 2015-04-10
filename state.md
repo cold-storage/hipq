@@ -5,7 +5,7 @@
 * id
 * job_type
 * job_key
-* status
+* state
 * error
 * attempt
 * scheduled_run_time
@@ -17,9 +17,9 @@
 ```job_type``` a string key that defines the type of job.
 Each job type runs a different bit of code.
 
-```job_key``` a string key that is unique per job type. Allows us to map results of an external asynchronous process back to a particular job instance. There may be multiple of the same value for job_key per job_type in done status, but there will only ever be on job instance for a given job_type / job_key in non-done status.
+```job_key``` a string key that is unique per job type. Allows us to map results of an external asynchronous process back to a particular job instance. There may be multiple of the same value for job_key per job_type in done state, but there will only ever be on job instance for a given job_type / job_key in non-done state.
 
-```status``` will be one of ```initial``` ```running``` ```error``` ```done```.
+```state``` will be one of ```initial``` ```running``` ```error``` ```done```.
 
 ```error``` will be some text or JSON indicating an error.
 
@@ -31,4 +31,16 @@ If the value is 3 we are on our third try.
 ```create_time``` is the time this database record was created.
 
 ```update_time``` is the time this database record was updated.
+
+### States
+
+In initial state error will be NONE. This is the initial state of a job before we try to run it.
+
+* state: initial
+* error: NONE
+
+In running state error will be NONE. Running state indicates the the app said it's trying to run the job. It may or may not have failed or timed out. All we know for sure is that we think it's running.
+
+* state: running
+* error: NONE
 
