@@ -1,23 +1,25 @@
 # Persistent State
 
-Job Instance
+## Job Instance
 
 * id
 * job_type
 * status
+* error
 * attempt
 * scheduled_run_time
 * create_time
-* udpate_time
+* update_time
 
 ```job_type``` is any unique string key that defines the type of the job.
 Each job type runs a different bit of code.
 
-```status``` will be one of ```initial``` ```running```
+```status``` will be one of ```initial``` ```running``` ```error``` ```done```.
 
-```attempt``` is an integer value that says how many attempts we have
-made to run the job successfully. If 0, that means we haven't tried.
-If 3, that means we are on our third try.
+```error``` will be some text or JSON indicating an error.
+
+```attempt``` is an integer value that says how many times we tried to run the job. If the value is 0 we haven't tried to run the job yet.
+If the value is 3 we are on our third try.
 
 ```scheduled_run_time``` is the time we want the job to run.
 
