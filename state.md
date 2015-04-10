@@ -21,16 +21,16 @@ Each job type runs a different bit of code.
 
 ```state``` will be one of ```initial``` ```running``` ```error``` ```final```.
 
-```error``` will be some text or JSON indicating an error.
+```error``` will be either the string NONE or some text or JSON indicating an error.
 
 ```attempt``` is an integer value that says how many times we tried to run the job. If the value is 0 we haven't tried to run the job yet.
 If the value is 3 we are on our third try.
 
-```scheduled_run_time``` is the time we want the job to run.
+```scheduled_run_time``` is the time we want the job to run next. In final state it's the last time we wanted the job to run.
 
-```create_time``` is the time this database record was created.
+```create_time``` is the time this database record was created. Never changes.
 
-```update_time``` is the time this database record was updated.
+```update_time``` is the time this database record was updated. Once we are in final state, this will never change.
 
 ### States
 
