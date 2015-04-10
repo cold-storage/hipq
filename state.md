@@ -1,6 +1,26 @@
 # Transient State
 
+## Queue
 
+* name
+* job_types
+* throttle_limit
+
+```name``` unique string used to identify the queue. 
+
+```job_types``` list of all registered job types.
+
+```throttle_limit``` numeric value indicating how many jobs can be run at a time. If the value is less than 1 there is no limit.
+
+## Job Type
+
+* job_type
+* default_timeout
+* default_priority
+* default_throttle_factor
+* default_time_windows
+* handler
+* retry_handler
 
 # Persistent State
 
@@ -15,6 +35,7 @@
 * attempt
 * scheduled_run_time
 * priority
+* throttle_factor
 * time_windows
 * create_time
 * update_time
@@ -38,6 +59,8 @@ If the value is 3 we are on our third try.
 ```scheduled_run_time``` is the time we want the job to run next. In final state it's the last time we wanted the job to run.
 
 ```priority``` a numeric value indicating priority given to certain jobs over others if throttling is enabled. Lower number is higher priority. Has no effect if no throttling is specified.
+
+```throttle_factor``` a numeric value (defaults to 1) used to determine how many jobs can be run before the queue throttle limit is reached. If all jobs have a throttle factor of 1 and the queue throttle limit is 100, then 100 jobs can run at a time.
 
 ```time_windows``` a list of start/end time of day windows in which the job must run.
 
@@ -63,7 +86,7 @@ Running state may transition to error state or final state.
 
 In error state error will be some JSON or text that describes the error. 
 
-Error state may transition back to running state or to final state.
+Error state may transition back to running state or to final state. On error we always run the retry handler if there is one.
 
 * state: error
 * error: some JSON or text indicating error
