@@ -10,9 +10,12 @@
 * job_type
 * job_key
 * state
+* timeout
 * error
 * attempt
 * scheduled_run_time
+* priority
+* time_windows
 * create_time
 * update_time
 
@@ -25,7 +28,7 @@ Each job type runs a different bit of code.
 
 ```state``` will be one of ```initial``` ```running``` ```error``` ```final```.
 
-```timeout_seconds``` a number of seconds after which we will throw a timeout error if the job is not successful.
+```timeout``` a number of seconds after which we will throw a timeout error if the job is not successful.
 
 ```error``` will be either the string NONE or some text or JSON indicating an error.
 
