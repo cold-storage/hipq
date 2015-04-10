@@ -11,7 +11,7 @@
 * create_time
 * update_time
 
-```id```
+```id``` a numeric surrogate key.
 
 ```job_type``` a string key that defines the type of job.
 Each job type runs a different bit of code.
