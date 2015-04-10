@@ -64,7 +64,7 @@ Final state will never change. It's final.
 
 #### Persistent State vs Actual State
 
-It's very important to distinguish between persistent state and actual state. The states described above (and the only thing we ever know for sure) are the persistent state -- the actual values currently in the database. 
+It's important to distinguish between persistent state and actual state. The states described above (and the only thing we ever know for sure) are the persistent state -- the actual values currently in the database. 
 
 Persistent state may be initial, but the job is actually running. If the app crashes before it has a chance to update the state it will likely run the job again when it restarts. 
 
