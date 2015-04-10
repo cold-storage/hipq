@@ -1,5 +1,5 @@
 # Persistent State
 
-|name|description|
-|----|-----------|
-|foo |bar        |
+|   name   |   description                                                 |
+|   ----   |   -----------                                                 |
+| foo      | bar                                                           |
