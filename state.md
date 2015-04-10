@@ -1,3 +1,7 @@
+# Transient State
+
+
+
 # Persistent State
 
 ## Job Instance
@@ -21,12 +25,18 @@ Each job type runs a different bit of code.
 
 ```state``` will be one of ```initial``` ```running``` ```error``` ```final```.
 
+```timeout_seconds``` a number of seconds after which we will throw a timeout error if the job is not successful.
+
 ```error``` will be either the string NONE or some text or JSON indicating an error.
 
 ```attempt``` is an integer value that says how many times we tried to run the job. If the value is 0 we haven't tried to run the job yet.
 If the value is 3 we are on our third try.
 
 ```scheduled_run_time``` is the time we want the job to run next. In final state it's the last time we wanted the job to run.
+
+```priority``` a numeric value indicating priority given to certain jobs over others if throttling is enabled. Lower number is higher priority. Has no effect if no throttling is specified.
+
+```time_windows``` a list of start/end time of day windows in which the job must run.
 
 ```create_time``` is the time this database record was created. Never changes.
 
