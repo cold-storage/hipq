@@ -2,14 +2,15 @@
 
 ## Job Instance
 
-* id
-* job_type
-* status
+* id*
+* job_type*
+* job_key
+* status*
 * error
-* attempt
-* scheduled_run_time
-* create_time
-* update_time
+* attempt*
+* scheduled_run_time*
+* create_time*
+* update_time*
 
 ```id``` a numeric surrogate key.
 
