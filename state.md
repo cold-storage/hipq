@@ -2,6 +2,8 @@
 
 ## hipq
 
+An application may instantiate one or more hipq instances.
+
 * name
 * table_naming_strategy
 * db_config
@@ -14,6 +16,8 @@
 
 ## Queue
 
+Each hipq instance may have one or more queues.
+
 * name
 * job_types
 * throttle_limit
@@ -25,6 +29,8 @@
 ```throttle_limit``` numeric value indicating how many jobs can be run at a time. If the value is less than 1 there is no limit.
 
 ## Job Type
+
+Each queue may have one or more job types. You can register a job type ahead of time, or you can just create a job instance and an appropriate job type will be registered.
 
 * job_type
 * default_timeout
