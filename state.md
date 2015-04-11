@@ -5,10 +5,13 @@
 An application may create one or more hipq instances.
 
 * name
+* queues
 * table_naming_strategy
 * db_config
 
 ```name``` unique (per database) string (lower case alpha with underscores) used to identify the hipq instance.
+
+```queues``` list of the queues for this hipq instance.
 
 ```table_naming_strategy``` code that determines how tables will be named for each queue in this hipq instance. Default strategy is hipq.name_queue.name. 
 
