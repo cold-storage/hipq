@@ -98,7 +98,7 @@ If the value is 3 we are on our third try.
 
 ```update_time``` is the time this database record was updated. Once we are in final state, this will never change.
 
-### States
+### States and State Transitions
 
 In initial state error will be the string NONE. This is the initial state of a job before we try to run it. 
 
@@ -107,7 +107,7 @@ Initial state will only transition to running state.
 * state: initial
 * error: NONE
 
-In running state error will be the string NONE. Running state indicates the app is trying to run the job.
+In running state error will be the string NONE. The attempt field will be incremented on transition to running state. Running state indicates the app is trying to run the job.
 
 Running state may transition to error state or final state.
 
