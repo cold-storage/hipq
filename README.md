@@ -22,10 +22,10 @@ We provide the following features for these types of jobs.
 
 * Durability
 * Scheduling
-* Priority
-* Throttling
 * Retry
 * Timeout
+* Priority
+* Throttling
 * Time Windowing
 
 Ultra low latency and super high throughput are not high priorities. We probably
