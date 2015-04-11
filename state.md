@@ -5,11 +5,14 @@
 An application may create one or more hipq instances.
 
 * name
+* shard_key
 * queues
 * table_naming_strategy
 * db_config
 
 ```name``` unique (per database) string (lower case alpha with underscores) used to identify the hipq instance.
+
+```shard_key``` if we want to do horizontal scaling of a single queue, we could use a shard_key to divvy up jobs between shards for a given queue. If we do that we would also have to persist throttle limit, and we could not guarantee an exact limit, but we could get pretty close.
 
 ```queues``` list of the queues for this hipq instance.
 
