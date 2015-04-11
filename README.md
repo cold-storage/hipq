@@ -37,32 +37,40 @@ occasional latency of half a minute or so.
 
 Once a job is successfully queued, we guarantee it will not be lost. It will
 run at the proper time (or as soon after that as possible) even if your
-application suffers a hard crash.
+application suffers a hard crash. However, we can't guarantee your job will be run only once.
 
 ### Scheduling
 
-All jobs are scheduled to run at a specific time which defaults to the time the
-job is added to the queue. Jobs are not guaranteed to run exactly at the
+All jobs are scheduled to run at a specific time which defaults to now. Jobs are not guaranteed to run exactly at the
 scheduled time. They will run at some point after the scheduled time depending
 on their priority and the queue's throttle settings.
 
 ### Retry
 
 Jobs can specify a retry strategy which runs on job failure. The retry strategy
-is any arbitrary logic and it may end up re-queueing the job or not based on its
+is any arbitrary logic, and it may end up re-queueing the job or not based on its
 very awesome logic.
 
 ### Timeout
 
-Jobs can specify an amount of time after which a timeout error will be thrown if
-the job has not completed. The default is 24 hours. It's generally a good idea
-to specify some reasonable timeout.
+Jobs can specify an amount of time after which a timeout error will be thrown. The default is 24 hours. It's generally a good idea to specify some reasonable timeout.
+
+### Throttling
+
+Each queue can have a concurrency limit. The default is unlimited. If the
+concurrency limit is 10, no more than 10 jobs will run at a time.
+
+Each job type can have concurrency or throttle factor that attempts to gauge
+the amount of effort required by some external system to run the job. So if your
+concurrency limit for a given queue is 10 you can run 10 jobs at at time. But
+if your jobs have a concurrency factor of 2 that means they are equal to
+two normal jobs and you can only run 5 of them at a time.
+
+TODO: We probably need a way to have critical jobs that don't count towards the throttle limit so we don't starve out other jobs. This could be accomplished by just not using a queue for those types of jobs, but then you don't get the benefit of the queue's durability, scheduling, retry and timeout.
 
 ### Priority
 
-Priority only really matters if throttling is being used. And if you are not
-careful in using priority, some lower priority jobs may never run especially if
-you have the queue configured to sort by priority first.
+Priority only matters if throttling is being used.
 
 All jobs have a numeric priority. The default is 100. The lower the number, the
 higher the priority. Jobs are taken from the queue by scheduled time then by
@@ -78,23 +86,11 @@ scheduled time      | priority
 10:40               |        7
 
 Alternatively you can configure a queue to sort first by priority then by
-scheduled time. This is a bit risky because higher priority jobs can starve out
-the lower priority ones and they may never run.
+scheduled time. Either way there is a risk that higher priority jobs will starve out lower priority jobs. 
 
 For example, lets say you have a throttle limit of ten jobs. That means only ten
 jobs will ever run at a given time. If you always have ten or more priority one
 jobs in your queue, any jobs with priority two or lower will never run.
-
-### Throttling
-
-Each queue can have a concurrency limit. The default is unlimited. If the
-concurrency limit is 10, no more than 10 jobs will run at a time.
-
-Each job type can have concurrency or throttle factor that attempts to guage
-the amount of effort requred by some external system to run the job. So if your
-concurrency limit for a given queue is 10 you can run 10 jobs at at time. But
-if your jobs have a concurrency factor of 2 that means they are equal to
-two normal jobs and you can only run 5 of them at a time.
 
 ### Time Windowing
 
