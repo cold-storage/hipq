@@ -2,7 +2,7 @@
 
 ## hipq
 
-An application may instantiate one or more hipq instances.
+An application may create one or more hipq instances.
 
 * name
 * table_naming_strategy
@@ -40,12 +40,19 @@ Each queue may have one or more job types. You can register a job type ahead of 
 * handler
 * retry_handler
 
+```handler``` the code that is run for this type of job.
+
+```retry_handler``` code that determines what to do if anything for retry.
+
+See Job Instance below for the rest of the field definitions.
+
 # Persistent State
 
 ## Job Instance
 
 * id
 * job_type
+* job_data
 * job_key
 * state
 * timeout
@@ -62,6 +69,8 @@ Each queue may have one or more job types. You can register a job type ahead of 
 
 ```job_type``` a string key that defines the type of job.
 Each job type runs a different bit of code.
+
+```job_data``` any JSON or string data that you need to store for this job instance.
 
 ```job_key``` a string key that is unique per job type. Allows us to map results of an external asynchronous process back to a particular job instance. There may be multiple of the same value for job_key per job_type in final state, but there will only ever be on job instance for a given job_type / job_key in non-final state.
 
