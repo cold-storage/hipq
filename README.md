@@ -88,9 +88,9 @@ scheduled time      | priority
 Alternatively you can configure a queue to sort first by priority then by
 scheduled time. Either way there is a risk that higher priority jobs will starve out lower priority jobs. 
 
-For example, lets say you have a throttle limit of ten jobs. That means only ten
+For example, lets say you sort by priority first and you have a throttle limit of ten jobs. Only ten
 jobs will ever run at a given time. If you always have ten or more priority one
-jobs in your queue, any jobs with priority two or lower will never run.
+jobs in your queue, priority two or lower jobs will never run.
 
 ### Time Windowing
 
