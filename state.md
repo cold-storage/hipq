@@ -65,7 +65,6 @@ See Job Instance below for the rest of the field definitions.
 * priority
 * throttle_factor
 * time_windows
-* create_time
 * update_time
 
 ```id``` a numeric surrogate key.
@@ -94,9 +93,7 @@ If the value is 3 we are on our third try.
 
 ```time_windows``` a list of start/end time of day windows in which the job must run.
 
-```create_time``` is the time this database record was created. Never changes.
-
-```update_time``` is the time this database record was updated. Once we are in final state, this will never change.
+```update_time``` is the time this database record was updated. Not needed in initial state. Must be set on all other state changes except for maybe moving to final state no real need. Once we are in final state, this will never change.
 
 ### States and State Transitions
 
