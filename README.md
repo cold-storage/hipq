@@ -46,6 +46,18 @@ job is added to the queue. Jobs are not guaranteed to run exactly at the
 scheduled time. They will run at some point after the scheduled time depending
 on their priority and the queue's throttle settings.
 
+### Retry
+
+Jobs can specify a retry strategy which runs on job failure. The retry strategy
+is any arbitrary logic and it may end up re-queueing the job or not based on its
+very awesome logic.
+
+### Timeout
+
+Jobs can specify an amount of time after which a timeout error will be thrown if
+the job has not completed. The default is 24 hours. It's generally a good idea
+to specify some reasonable timeout.
+
 ### Priority
 
 Priority only really matters if throttling is being used. And if you are not
@@ -83,18 +95,6 @@ the amount of effort requred by some external system to run the job. So if your
 concurrency limit for a given queue is 10 you can run 10 jobs at at time. But
 if your jobs have a concurrency factor of 2 that means they are equal to
 two normal jobs and you can only run 5 of them at a time.
-
-### Retry
-
-Jobs can specify a retry strategy which runs on job failure. The retry strategy
-is any arbitrary logic and it may end up re-queueing the job or not based on its
-very awesome logic.
-
-### Timeout
-
-Jobs can specify an amount of time after which a timeout error will be thrown if
-the job has not completed. The default is 24 hours. It's generally a good idea
-to specify some reasonable timeout.
 
 ### Time Windowing
 
