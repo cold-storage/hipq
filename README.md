@@ -77,6 +77,20 @@ throttle limit so we don't starve out other jobs. This could be accomplished by
 just not using a queue for those types of jobs, but then you don't get the
 benefit of the queue's durability, scheduling, retry and timeout.
 
+So throttling in our use case isn't so simple as just only run a max of x number
+of jobs per queue. It could be x percent of this type of job, or x number of
+jobs per region, or per server, etc.
+
+I think we need a throttler that's per queue which is any arbitrary logic that
+might decide to not run a job at all or to reschedule it for a later time. The
+throttler would need to have access to the list of currently running jobs and
+any other info it may need.
+
+Let's say we allow a max of 100 jobs at a time and we decide to allocate 40%
+capacity to the east region, 30% to the north and 30% to the west. Each job in
+it's job_data would need to specify its region and the throttler would not allow
+the east to hog more than 40% of the jobs.
+
 ### Priority
 
 Priority only matters if throttling is being used.
@@ -126,6 +140,24 @@ having implementations in languages other than Node.js.
 Actually not sure we can or want to horrizontally scale a single queue.
 Otherwise you end up with something like Kafka or Knesis. And in that case we
 would just want to add priority, retry, throttling, etc to them.
+
+### Batch Processing Algorithm
+
+So in order to be efficient and keep things simple we are going batch
+processing. We will read and write all state to the database periodically in
+batches.
+
+We start with a list of 0 or more jobs in memory -- the current batch. Every
+x seconds we will do the following.
+
+1. Get list of all jobs whose time to run has come.
+2. Apply the throttler (if any) to this list which results in zero or more
+new jobs to be run -- the new batch.
+3. Persist the current batch and the new batch to the database -- return list of
+not running jobs from that list.
+4. Remove jobs from the current batch that are in returned list of not running
+jobs.
+5. Add the new batch to the current batch.
 
 ### PostgreSQL Pub-Sub
 

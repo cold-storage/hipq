@@ -32,6 +32,7 @@ Each hipq instance may have one or more queues.
 * name
 * job_types
 * throttle_limit
+* running_jobs
 
 ```name``` unique (per hipq instance) string (lower case alpha with underscores)
 used to identify the queue.
