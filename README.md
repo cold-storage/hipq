@@ -143,21 +143,50 @@ would just want to add priority, retry, throttling, etc to them.
 
 ### Batch Processing Algorithm
 
-So in order to be efficient and keep things simple we are going batch
-processing. We will read and write all state to the database periodically in
-batches.
+So in order to be efficient and keep things simple we are batch processing. We
+will read and write all state to the database periodically in batches.
 
-We start with a list of 0 or more jobs in memory -- the current batch. Every
-x seconds we will do the following.
+This is all about keeping the state space as simple as possible and making sure
+db and in memory state don't get out of sync.
 
-1. Get list of all jobs whose time to run has come.
+As far as state goes for the in memory list of jobs, they can change from
+initial to running and from running to either error or final. We will never
+re-run jobs from the in memory list. Once a job in memory transitions to error
+or final, it must be saved to the db and removed from the list. It will only be
+run again when pulled back from db.
+
+We start with a list of 0 or more jobs in memory -- the current batch. Every x
+seconds we will do the following.
+
+1. Get list from the db of all jobs whose time to run has come and are not in
+the current batch.
 2. Apply the throttler (if any) to this list which results in zero or more
 new jobs to be run -- the new batch.
-3. Persist the current batch and the new batch to the database -- return list of
-not running jobs from that list.
+3. Defensive copy and persist the current batch to the database
+-- return list of not running jobs from current batch list.
 4. Remove jobs from the current batch that are in returned list of not running
-jobs.
-5. Add the new batch to the current batch.
+jobs and add new batch to current batch.
+5. Loop over the new batch and run each.
+
+Step 3 is a critical step. In step 3, we need to create a defensive
+copy of the jobs passed in.
+
+Here is where we apply retry handler -- to the defensive copy. The retry handler
+may change the state from error to final or it may leave the job in error state
+and possibly modify the scheduled time to run or job data so the job can be
+re-tried. Then we save the job.
+
+Once the jobs are persisted we return the list of jobs that were not running in
+the immutable copy. Now in step 4 we can safely remove jobs that were not
+running because we know their state will not have changed in the mean time. Any
+jobs that were running may have changed state, and that's fine we will persist
+them next time.
+
+Finally we add the new batch to the current and repeat all over.
+
+Things to notice about current batch.
+
+1. There may be jobs in the current batch that aren't running yet.
 
 ### PostgreSQL Pub-Sub
 
