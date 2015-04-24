@@ -133,3 +133,28 @@ Looks interesting, but probably want to keep to SQL standard so we can use any
 SQL compliant db. http://blog.andyet.com/2015/04/06/postgres-pubsub-with-
 json?utm_source=postgresweekly&utm_medium=email
 
+## Database Schema
+
+```
+CREATE TABLE job (
+  id              serial NOT NULL,
+  scheduled_time  timestamp with time zone NOT NULL DEFAULT now(),
+  priority        integer NOT NULL DEFAULT 0,
+  timeout_seconds integer NOT NULL DEFAULT 86400,
+  retry_strategy  text NOT NULL DEFAULT '',
+
+  CONSTRAINT job_pkey PRIMARY KEY (id)
+)
+```
+
+```
+CREATE TABLE time_window (
+  id              serial NOT NULL,
+  scheduled_time  timestamp with time zone NOT NULL DEFAULT now(),
+  priority        integer NOT NULL DEFAULT 0,
+  timeout_seconds integer NOT NULL DEFAULT 86400,
+  retry_strategy  text NOT NULL DEFAULT '',
+
+  CONSTRAINT job_pkey PRIMARY KEY (id)
+)
+```
