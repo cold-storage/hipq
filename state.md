@@ -133,6 +133,8 @@ final state no real need. Once we are in final state, this will never change.
 
 ### States and State Transitions
 
+#### initial
+
 In initial state error will be the string NONE. This is the initial state of a
 job before we try to run it.
 
@@ -140,6 +142,8 @@ Initial state will only transition to running state.
 
 * state: initial
 * error: NONE
+
+#### running
 
 In running state error will be the string NONE. The attempt field will be
 incremented on transition to running state. Running state indicates the app is
@@ -150,6 +154,8 @@ Running state may transition to error state or final state.
 * state: running
 * error: NONE
 
+#### error
+
 In error state error will be some JSON or text that describes the error.
 
 Error state may transition to retry state or to final state. On error we
@@ -158,12 +164,16 @@ always run the retry handler if there is one.
 * state: error
 * error: some JSON or text indicating error
 
+#### retry
+
 In retry state error will be a description of the error. Retry state indicates that we had an error but we have decided to retry instead of transition to final state.
 
 Retry state will only transition to running state.
 
 * state: retry
 * error: some JSON or text indicating error
+
+#### final
 
 In final state, error may be NONE or some JSON or text indicating an error.
 Final state means we will never try to re-run the job. It's finished.
