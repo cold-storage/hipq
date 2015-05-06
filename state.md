@@ -141,13 +141,6 @@ Initial state will only transition to running state.
 * state: initial
 * error: NONE
 
-In retry state error will be a description of the error. Retry state indicates that we had an error but we have decided to retry instead of transition to final state.
-
-Retry state will only transition to running state.
-
-* state: retry
-* error: some JSON or text indicating error
-
 In running state error will be the string NONE. The attempt field will be
 incremented on transition to running state. Running state indicates the app is
 trying to run the job.
@@ -163,6 +156,13 @@ Error state may transition to retry state or to final state. On error we
 always run the retry handler if there is one.
 
 * state: error
+* error: some JSON or text indicating error
+
+In retry state error will be a description of the error. Retry state indicates that we had an error but we have decided to retry instead of transition to final state.
+
+Retry state will only transition to running state.
+
+* state: retry
 * error: some JSON or text indicating error
 
 In final state, error may be NONE or some JSON or text indicating an error.
