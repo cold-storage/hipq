@@ -127,6 +127,8 @@ also specified a scheduled time, then we will use the scheduled time assuming it
 is  within the window). If we pull the job off the queue and its window has
 already closed, we will re-queue it to run at the next available time.
 
+Time windows could be a specific case of throttling.
+
 ## Implementation Notes
 
 ### Durability
