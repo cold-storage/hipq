@@ -10,20 +10,20 @@ An application may create one or more hipq instances.
 * table_naming_strategy
 * db_config
 
-```name``` unique (per database) string (lower case alpha with underscores) used
+`name` unique (per database) string (lower case alpha with underscores) used
 to identify the hipq instance.
 
-```shard_key``` if we want to do horizontal scaling of a single queue, we could
+`shard_key` if we want to do horizontal scaling of a single queue, we could
 use a shard_key to divvy up jobs between shards for a given queue. If we do that
 we would also have to persist throttle limit, and we could not guarantee an
 exact limit, but we could get pretty close.
 
-```queues``` list of the queues for this hipq instance.
+`queues` list of the queues for this hipq instance.
 
-```table_naming_strategy``` code that determines how tables will be named for
+`table_naming_strategy` code that determines how tables will be named for
 each queue in this hipq instance. Default strategy is hipq.name_queue.name.
 
-```db_config``` JSON of database connection information.
+`db_config` JSON of database connection information.
 
 ## Queue
 
@@ -34,12 +34,12 @@ Each hipq instance may have one or more queues.
 * throttle_limit
 * running_jobs
 
-```name``` unique (per hipq instance) string (lower case alpha with underscores)
+`name` unique (per hipq instance) string (lower case alpha with underscores)
 used to identify the queue.
 
-```job_types``` list of all registered job types.
+`job_types` list of all registered job types.
 
-```throttle_limit``` numeric value indicating how many jobs can be run at a
+`throttle_limit` numeric value indicating how many jobs can be run at a
 time. If the value is less than 1 there is no limit.
 
 ## Job Type
@@ -56,9 +56,9 @@ registered.
 * handler
 * retry_handler
 
-```handler``` the code that is run for this type of job.
+`handler` the code that is run for this type of job.
 
-```retry_handler``` code that determines what to do if anything for retry.
+`retry_handler` code that determines what to do if anything for retry.
 
 See Job Instance below for the rest of the field definitions.
 
@@ -86,48 +86,48 @@ reasonable default.
 * time_windows
 * update_time
 
-```id``` a numeric surrogate key.
+`id` a numeric surrogate key.
 
-```job_type``` a string key that defines the type of job. Each job type runs a
+`job_type` a string key that defines the type of job. Each job type runs a
 different bit of code.
 
-```job_data``` any JSON or string data that you need to store for this job
+`job_data` any JSON or string data that you need to store for this job
 instance.
 
-```job_key``` a string key that is unique per job type. Allows us to map results
+`job_key` a string key that is unique per job type. Allows us to map results
 of an external asynchronous process back to a particular job instance. There may
 be multiple of the same value for job_key per job_type in final state, but there
 will only ever be on job instance for a given job_type / job_key in non-final
 state.
 
-```state``` will be one of ```initial``` `retry` ```running``` ```error``` ```final```.
+`state` will be one of `initial` `retry` `running` `error` `final`.
 
-```timeout``` a number of seconds after which we will throw a timeout error if
+`timeout` a number of seconds after which we will throw a timeout error if
 the job is not successful.
 
-```error``` will be either the string NONE or some text or JSON indicating an
+`error` will be either the string NONE or some text or JSON indicating an
 error.
 
-```attempt``` is an integer value that says how many times we tried to run the
+`attempt` is an integer value that says how many times we tried to run the
 job. If the value is 0 we haven't tried to run the job yet. If the value is 3 we
 are on our third try.
 
-```scheduled_run_time``` is the time we want the job to run next. In final state
+`scheduled_run_time` is the time we want the job to run next. In final state
 it's the last time we wanted the job to run.
 
-```priority``` a numeric value indicating priority given to certain jobs over
+`priority` a numeric value indicating priority given to certain jobs over
 others if throttling is enabled. Lower number is higher priority. Has no effect
 if no throttling is specified.
 
-```throttle_factor``` a numeric value (defaults to 1) used to determine how many
+`throttle_factor` a numeric value (defaults to 1) used to determine how many
 jobs can be run before the queue throttle limit is reached. If all jobs have a
 throttle factor of 1 and the queue throttle limit is 100, then 100 jobs can run
 at a time.
 
-```time_windows``` a list of start/end time of day windows in which the job must
+`time_windows` a list of start/end time of day windows in which the job must
 run.
 
-```update_time``` is the time this database record was updated. Not needed in
+`update_time` is the time this database record was updated. Not needed in
 initial state. Must be set on all other state changes except for maybe moving to
 final state no real need. Once we are in final state, this will never change.
 
