@@ -151,10 +151,8 @@ will read and write all state to the database periodically in batches.
 This is all about keeping the state space as simple as possible and making sure
 db and in memory state don't get out of sync.
 
-As far as state goes for the in memory list of jobs, they can change from
-initial to running and from running to either error or final. We will never
-re-run jobs from the in memory list. Once a job in memory transitions to error
-or final, it must be saved to the db and removed from the list. It will only be
+We will never re-run jobs from the in memory list. Once a job in memory transitions to error, 
+retry, or final it must be saved to the db and removed from the list. It will only be
 run again when pulled back from db.
 
 We start with a list of 0 or more jobs in memory -- the current batch. Every x
