@@ -141,6 +141,13 @@ Initial state will only transition to running state.
 * state: initial
 * error: NONE
 
+In retry state error will be a description of the error. Retry state indicates that we had an error but we have decided to retry instead of transition to final state.
+
+Retry state will only transition to running state.
+
+* state: retry
+* error: some JSON or text indicating error
+
 In running state error will be the string NONE. The attempt field will be
 incremented on transition to running state. Running state indicates the app is
 trying to run the job.
@@ -152,7 +159,7 @@ Running state may transition to error state or final state.
 
 In error state error will be some JSON or text that describes the error.
 
-Error state may transition back to running state or to final state. On error we
+Error state may transition to retry state or to final state. On error we
 always run the retry handler if there is one.
 
 * state: error
@@ -176,8 +183,8 @@ Persistent state may be initial, but the job is actually running. If the app
 crashes before it has a chance to update the state it will likely run the job
 again when it restarts.
 
-All jobs must be able to tolerate being re-run. We make an absolute guarantee
-that your job will be run. But it may be run more than once.
+All jobs must be able to tolerate being re-run. We guarantee
+your job will run. But it may run more than once.
 
 As another example, persistent state may be running, but the app has crashed.
 Now when the app starts back up, the job isn't really running.
