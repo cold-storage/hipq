@@ -100,7 +100,7 @@ be multiple of the same value for job_key per job_type in final state, but there
 will only ever be on job instance for a given job_type / job_key in non-final
 state.
 
-```state``` will be one of ```initial``` ```running``` ```error``` ```final```.
+```state``` will be one of ```initial``` `retry` ```running``` ```error``` ```final```.
 
 ```timeout``` a number of seconds after which we will throw a timeout error if
 the job is not successful.
